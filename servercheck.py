@@ -2,7 +2,7 @@
 # A simple script that checks whether a server is up and sends an email notification if the server is down
 # Uses SMTP auth 
 
-"""For the script to send emails, you need to add the follwoing environment vaiables
+"""For the script to send emails, you need to add the following environment variables
 SMTP SERVER eg export SMTP_SERVER=mail.myserver.com
 SMTP_PORT eg export SMTP_PORT=465
 FROM_EMAIL eg export FROM_EMAIL=me@myserver.com

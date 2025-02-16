@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
+# A simple script that checks whether a server is up and sends an email notification if the server is down
+# Uses SMTP auth 
 
+"""For the script to send emails, you need to add the follwoing environment vaiables
+SMTP SERVER eg export SMTP_SERVER=mail.myserver.com
+SMTP_PORT eg export SMTP_PORT=465
+FROM_EMAIL eg export FROM_EMAIL=me@myserver.com
+SMTP_PASS eg export SMTP_PASS=myverysecurepassword
+TO_EMAIL eg export TO_EMAIL=recipient@theirdomain.com"""
 
+import platform
 import subprocess  
 import os  
 import smtplib  
@@ -18,14 +27,15 @@ smtp_pass = os.getenv('SMTP_PASS')
 email_recipient = os.getenv('TO_EMAIL')
 
 # Define the server to monitor (IP address or hostname).
-server = '192.168.0.32'
+server = '192.168.10.32'
 
 time = datetime.now()
 time = time.strftime("%Y-%m-%d %H:%M:%S")
 try:
+    ping_count = "-c 20" if platform.system().lower() != "windows" else "-n 20" #checks whether the os is linux or windows
     # Ping the server 20 times to check if it's reachable.
     # `subprocess.run` runs the command and captures the output.
-    ping = subprocess.run(['ping', '-c', '20', server], capture_output=True, text=True, check=True)
+    ping = subprocess.run(['ping', ping_count, server], capture_output=True, text=True, check=True)
     
      
 except subprocess.CalledProcessError as e:

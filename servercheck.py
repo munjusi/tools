@@ -3,7 +3,7 @@
 # Uses SMTP auth 
 
 """For the script to send emails, you need to add the following environment variables
-SMTP SERVER eg export SMTP_SERVER=mail.myserver.com
+SMTP_SERVER eg export SMTP_SERVER=mail.myserver.com
 SMTP_PORT eg export SMTP_PORT=465
 FROM_EMAIL eg export FROM_EMAIL=me@myserver.com
 SMTP_PASS eg export SMTP_PASS=myverysecurepassword

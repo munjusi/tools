@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
 
+#This is a simple script that checks whether a website is reachable
+#If the website is unreachable, it sends an email and logs the occurence
+#Requires a .env with smtp connection details
+
+
 import requests
 import logging
 import os  
+from dotenv import load_dotenv
 import smtplib  
 from email.mime.text import MIMEText  
 from email.utils import formataddr  
 from datetime import datetime
 
 
-website = 'http://github.com'
-print(website)
+website = 'http://githubxyz.com'
+
 #configure logging
 logging.basicConfig(filename="/tmp/website.log",level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def email_sender(msg):
+    load_dotenv()
     smtp_server = os.getenv('SMTP_SERVER')  
     smtp_port = os.getenv('SMTP_PORT')  
     from_address = os.getenv('FROM_EMAIL')  
@@ -28,7 +35,7 @@ def email_sender(msg):
     time = datetime.now()
     time = time.strftime("%Y-%m-%d %H:%M:%S")
     subject = msg  # Email subject.
-    body = f"This is to notify you that website {website} was down at {time}. \n" # Email body.
+    body = f"This is to notify you that website {website} was unreachable at {time}. \n" # Email body.
 
     # Create a plain text email message.
     message = MIMEText(body, "plain")
@@ -59,7 +66,6 @@ def email_sender(msg):
 try:
     response = requests.get(website,timeout=5)
     status_code = response.status_code
-    print(status_code)
     website_status = 'up' if status_code == 200 else 'f"Unreachable: Status code:{status_code}"'
     if website_status =="down":
         status_message = "Website Down"

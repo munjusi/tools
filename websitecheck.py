@@ -41,7 +41,7 @@ def email_sender(msg):
     message = MIMEText(body, "plain")
         
     # Format the "From" address with a display name.
-    message["From"] = formataddr(('Server Monitor', from_address))
+    message["From"] = formataddr(('Website Monitor', from_address))
         
     # Set the recipient's email address.
     message["To"] = email_recipient

@@ -48,13 +48,12 @@ def email_sender(msg):
         
     # Set the email subject.
     message["Subject"] = subject
-    print(smtp_port)
+    
     try:
         
         # Connect to the SMTP server and send the email.
         with smtplib.SMTP(smtp_server, smtp_port) as mailserver:
-            print(message)
-            mailserver.set_debuglevel(1)
+            
             mailserver.starttls()  # Upgrade the connection to TLS for security.
             mailserver.login(from_address, smtp_pass)  # Log in to the SMTP server.
             mailserver.sendmail(from_address, email_recipient, message.as_string())  # Send the email.
@@ -66,20 +65,12 @@ def email_sender(msg):
 try:
     response = requests.get(website,timeout=5)
     status_code = response.status_code
-    website_status = 'up' if status_code == 200 else 'f"Unreachable: Status code:{status_code}"'
-    if website_status =="down":
+    website_status = 'up' if status_code == 200 else f"Unreachable: Status code:{status_code}"
+    if website_status != "up":
         status_message = "Website Down"
         email_sender(status_message)
+        
 
 except requests.exceptions.ConnectionError as e:
     status_message = "Name or service not known."
     email_sender(status_message)
-
-
-
-
-exit(1)  # Exit the script 
-
-        
-        
-      
